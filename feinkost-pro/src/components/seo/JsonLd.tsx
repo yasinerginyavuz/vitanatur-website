@@ -1,12 +1,29 @@
 "use client";
 
+import { useEffect } from "react";
 import { Product } from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://feinkost.de";
 
+function useJsonLd(id: string, schema: Record<string, unknown>) {
+  useEffect(() => {
+    let script = document.getElementById(id) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement("script");
+      script.id = id;
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+    return () => {
+      script?.remove();
+    };
+  }, [id, schema]);
+}
+
 /* ── Organization ── */
 export function OrganizationJsonLd() {
-  const schema = {
+  useJsonLd("ld-organization", {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Feinkost",
@@ -20,19 +37,13 @@ export function OrganizationJsonLd() {
       availableLanguage: ["German", "Turkish"],
     },
     sameAs: [],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+  });
+  return null;
 }
 
 /* ── WebSite with SearchAction ── */
 export function WebSiteJsonLd() {
-  const schema = {
+  useJsonLd("ld-website", {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Feinkost",
@@ -48,19 +59,13 @@ export function WebSiteJsonLd() {
       },
       "query-input": "required name=search_term_string",
     },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+  });
+  return null;
 }
 
 /* ── LocalBusiness ── */
 export function LocalBusinessJsonLd() {
-  const schema = {
+  useJsonLd("ld-localbusiness", {
     "@context": "https://schema.org",
     "@type": "Store",
     name: "Feinkost",
@@ -76,19 +81,13 @@ export function LocalBusinessJsonLd() {
       "@type": "PostalAddress",
       addressCountry: "DE",
     },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+  });
+  return null;
 }
 
 /* ── Product ── */
 export function ProductJsonLd({ product }: { product: Product }) {
-  const schema = {
+  useJsonLd(`ld-product-${product.id}`, {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
@@ -128,14 +127,8 @@ export function ProductJsonLd({ product }: { product: Product }) {
       "@type": "Country",
       name: product.origin,
     },
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+  });
+  return null;
 }
 
 /* ── BreadcrumbList ── */
@@ -144,7 +137,7 @@ export function BreadcrumbJsonLd({
 }: {
   items: { name: string; url: string }[];
 }) {
-  const schema = {
+  useJsonLd("ld-breadcrumb", {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
@@ -153,12 +146,6 @@ export function BreadcrumbJsonLd({
       name: item.name,
       item: item.url.startsWith("http") ? item.url : `${BASE_URL}${item.url}`,
     })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  );
+  });
+  return null;
 }

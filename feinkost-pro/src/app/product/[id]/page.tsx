@@ -11,7 +11,6 @@ import { useCartStore } from "@/store/cart-store";
 import { useLang } from "@/lib/i18n";
 import { trackViewItem } from "@/lib/analytics";
 import { ProductJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { OpenGraphMeta, CanonicalUrl } from "@/components/seo/OpenGraph";
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -89,14 +88,6 @@ export default function ProductDetailPage() {
       {/* SEO */}
       <ProductJsonLd product={product} />
       <BreadcrumbJsonLd items={breadcrumbItems} />
-      <OpenGraphMeta
-        title={`${productName} | Feinkost`}
-        description={productDescription.slice(0, 160)}
-        image={product.images[0] || ""}
-        url={`/product/${product.id}`}
-        type="product"
-      />
-      <CanonicalUrl path={`/product/${product.id}`} />
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-sand-400 mb-8">

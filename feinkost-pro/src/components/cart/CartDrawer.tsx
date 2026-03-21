@@ -4,13 +4,19 @@ import { useCartStore } from "@/store/cart-store";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WhatsAppButton } from "@/components/cart/WhatsAppButton";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLang } from "@/lib/i18n";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice } =
     useCartStore();
+  const router = useRouter();
   const { t, lang } = useLang();
+
+  function handleCheckout() {
+    closeCart();
+    router.push("/checkout");
+  }
 
   if (!isOpen) return null;
 
@@ -142,11 +148,9 @@ export function CartDrawer() {
                 {totalPrice().toFixed(2)} &euro;
               </span>
             </div>
-            <Link href="/checkout" onClick={closeCart}>
-              <Button variant="primary" size="lg" className="w-full">
-                {t("cart.checkout")}
-              </Button>
-            </Link>
+            <Button variant="primary" size="lg" className="w-full" onClick={handleCheckout}>
+              {t("cart.checkout")}
+            </Button>
             <WhatsAppButton />
             <p className="text-[11px] text-center text-espresso-400">
               {t("cart.shipping_note")}

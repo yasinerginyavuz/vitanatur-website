@@ -7,7 +7,6 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { useLang } from "@/lib/i18n";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { OpenGraphMeta, CanonicalUrl } from "@/components/seo/OpenGraph";
 
 export default function HomePage() {
   const products = useAdminStore((s) => s.products);
@@ -18,13 +17,6 @@ export default function HomePage() {
     <>
       {/* SEO */}
       <BreadcrumbJsonLd items={[{ name: "Startseite", url: "/" }]} />
-      <OpenGraphMeta
-        title="Feinkost — Türkische & Mediterrane Feinkost Online Kaufen"
-        description="Premium türkische und mediterrane Feinkost online bestellen. Handverlesene Gewürze, Trockenfrüchte, Nüsse, Olivenöl und orientalische Spezialitäten."
-        url="/"
-        type="website"
-      />
-      <CanonicalUrl path="/" />
       {/* ---- Hero ---- */}
       <section className="relative bg-cream-100 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{

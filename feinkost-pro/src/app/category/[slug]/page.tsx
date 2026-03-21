@@ -9,7 +9,6 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 import { CategorySlug } from "@/types";
 import { useLang } from "@/lib/i18n";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { OpenGraphMeta, CanonicalUrl } from "@/components/seo/OpenGraph";
 
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -54,13 +53,6 @@ export default function CategoryPage() {
           { name: category.name, url: `/category/${category.slug}` },
         ]}
       />
-      <OpenGraphMeta
-        title={`${t(catNameKey)} — Feinkost`}
-        description={`${t(catDescKey)} — Premium Auswahl bei Feinkost online bestellen.`}
-        url={`/category/${category.slug}`}
-        type="website"
-      />
-      <CanonicalUrl path={`/category/${category.slug}`} />
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-sand-400 mb-8">
