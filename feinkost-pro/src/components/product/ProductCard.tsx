@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { t, lang } = useLang();
 
   const selectedVariant = product.variants.find((v) => v.id === selectedVariantId) ?? (product.variants.length > 0 ? product.variants[0] : null);
-  const currentPrice = product.price;
+  const currentPrice = selectedVariant ? selectedVariant.price : product.price;
 
   const isOutOfStock = product.stock === 0;
   const isLowStock = product.stock > 0 && product.stock <= product.lowStockThreshold;

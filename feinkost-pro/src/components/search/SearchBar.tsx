@@ -230,7 +230,7 @@ export function SearchBar({ initialQuery = "", alwaysExpanded = false }: SearchB
                   </div>
                   {/* Price */}
                   <span className="text-sm font-semibold text-espresso-500 flex-shrink-0">
-                    {product.price.toFixed(2).replace(".", ",")} &euro;
+                    {(product.variants.length > 0 ? product.variants[0].price : product.price).toFixed(2).replace(".", ",")} &euro;
                   </span>
                 </button>
               ))}
