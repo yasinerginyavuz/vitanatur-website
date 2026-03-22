@@ -36,6 +36,17 @@ export function ProductForm({ product, onClose }: ProductFormProps) {
     product?.descriptionTr ?? ""
   );
   const [price, setPrice] = useState(product?.price.toString() ?? "0");
+
+  // Ana fiyat değişince ilk varyantın fiyatını da güncelle
+  const handlePriceChange = (newPrice: string) => {
+    setPrice(newPrice);
+    const num = parseFloat(newPrice);
+    if (!isNaN(num) && variants.length > 0) {
+      setVariants((prev) =>
+        prev.map((v, i) => (i === 0 ? { ...v, price: num } : v))
+      );
+    }
+  };
   const [category, setCategory] = useState<CategorySlug>(product?.category ?? "gewuerze");
   const [weight, setWeight] = useState(product?.weight ?? "");
   const [origin, setOrigin] = useState(product?.origin ?? "");
@@ -232,7 +243,7 @@ export function ProductForm({ product, onClose }: ProductFormProps) {
                   step="0.01"
                   min="0"
                   value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  onChange={(e) => handlePriceChange(e.target.value)}
                   placeholder="0,00"
                   className={inputClass}
                 />
