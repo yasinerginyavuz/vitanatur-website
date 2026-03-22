@@ -19,9 +19,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const openCart = useCartStore((s) => s.openCart);
   const { t, lang } = useLang();
 
-  // Always derive variant from current product data so price updates are reflected
   const selectedVariant = product.variants.find((v) => v.id === selectedVariantId) ?? (product.variants.length > 0 ? product.variants[0] : null);
-  const currentPrice = selectedVariant ? selectedVariant.price : product.price;
+  const currentPrice = product.price;
 
   const isOutOfStock = product.stock === 0;
   const isLowStock = product.stock > 0 && product.stock <= product.lowStockThreshold;
