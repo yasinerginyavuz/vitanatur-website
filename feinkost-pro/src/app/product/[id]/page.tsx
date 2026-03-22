@@ -65,7 +65,7 @@ export default function ProductDetailPage() {
   }
 
   const category = categories.find((c) => c.slug === product.category);
-  const currentPrice = selectedVariant ? selectedVariant.price : product.price;
+  const currentPrice = product.price;
   const currentWeight = selectedVariant ? selectedVariant.weight : product.weight;
   const isOutOfStock = product.stock === 0;
   const isLowStock = product.stock > 0 && product.stock <= product.lowStockThreshold;

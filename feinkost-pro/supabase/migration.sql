@@ -48,8 +48,11 @@ CREATE TABLE IF NOT EXISTS products (
   category     TEXT NOT NULL REFERENCES categories(slug) ON DELETE RESTRICT ON UPDATE CASCADE,
   weight       TEXT,
   origin       TEXT,
+  origin_tr    TEXT,
   in_stock     BOOLEAN DEFAULT true,
   featured     BOOLEAN DEFAULT false,
+  stock        INTEGER DEFAULT 50,
+  low_stock_threshold INTEGER DEFAULT 5,
   created_at   TIMESTAMPTZ DEFAULT NOW(),
   updated_at   TIMESTAMPTZ DEFAULT NOW()
 );
